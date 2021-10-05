@@ -7,7 +7,6 @@ import { LinkContainer } from 'react-router-bootstrap/lib';
 function NavigationBar() {
   return (
     <Navbar bg="light" expand="lg" >
-      <Container>
         <Navbar.Brand id="navbar_brand" className="mx-auto" href="#home">React</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -20,7 +19,6 @@ function NavigationBar() {
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
-      </Container>
     </Navbar>
   );
 }

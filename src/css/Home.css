@@ -1,0 +1,58 @@
+.home_body {
+margin-top: 100px;
+}
+
+#add_button {
+    border: none;
+    border-radius: 0.25rem;
+    min-height: 38px;
+    background-color: #1368AA;
+    color: white;
+    width: 50%;
+}
+#submit_button {
+  border: none;
+  border-radius: 0.25rem;
+  min-height: 38px;
+  background-color: #EF3C2D;
+  color: white;
+  width: 50%
+}
+
+.button_div {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+@media all and (min-width: 993px) {
+  .resultCol {
+    margin-bottom: 30px;
+  }
+  .resultsRow {
+    margin-top: 2.5%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media all and (max-width: 992px) {
+  #add_button {
+    width: 100%;
+    padding: 2px 8px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+  }
+  .resultCol {
+    padding-top: 15px;
+    margin-bottom: 5%;
+  }
+  #submit_button {
+    width: 100%;
+    padding: 2px 8px;
+  }
+  .row {
+    margin: 0px !important;
+    max-width: 100%;
+  }
+}

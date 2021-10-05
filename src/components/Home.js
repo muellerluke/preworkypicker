@@ -1,4 +1,5 @@
 import React from 'react';
+import "../css/Home.css";
 import SearchLine from "./SearchLine";
 import Result from "./Result";
 const axios = require('axios');
@@ -30,11 +31,19 @@ export default class Home extends React.Component {
 
   componentDidMount() {
     this.getColumnNames().then((data) => {
-      data.forEach((obj, i) => {
-        obj['label'] = obj['COLUMN_NAME']; // Assign new key
+      data.forEach((obj, index) => {
+        obj['label'] = obj['COLUMN_NAME'];
       });
       this.setState({columnNames: data});
     });
+
+    this.getResults().then((data) => {
+      data.forEach((obj, i) => {
+        obj.display = true;
+      })
+      this.setState({results: data, all: data});
+    });
+
   }
 
   getColumnNames() {
@@ -53,14 +62,13 @@ export default class Home extends React.Component {
     });
   }
 
-  getResults(arr) {
+  getResults() {
     var config = {
-      method: 'post',
+      method: 'get',
       url: 'https://preworkypicker.com:8080/search',
       headers: {
         'Content-Type': 'application/json'
       },
-      data : arr
     };
 
     return axios(config)
@@ -88,9 +96,30 @@ export default class Home extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.getResults(this.state.searchArr).then((results) => {
-      this.setState({results: results});
+    let validSearch = true;
+    this.state.searchArr.forEach((obj, xxx) => {
+      if (obj.ingredient === "" || obj.sign === "" || obj.value === "") {
+        validSearch = false;
+      }
     });
+    if (validSearch) {
+      let tempResults = this.state.all;
+      tempResults.forEach((resultObj, resultI) => {
+        resultObj.display = true;
+        this.state.searchArr.forEach((searchObj, searchI) => {
+          if (searchObj.sign === ">=") {
+            if (resultObj[searchObj.ingredient] < searchObj.value) {
+              resultObj.display = false;
+            }
+          } else {
+            if (resultObj[searchObj.ingredient] > searchObj.value) {
+              resultObj.display = false;
+            }
+          }
+        })
+      })
+      this.setState({results: tempResults});
+    }
   }
 
   handleChange(key, value, index) {
@@ -112,17 +141,47 @@ export default class Home extends React.Component {
       searchComp = null;
     }
    return (
-     <div>
+     <div className="home_body">
       <form onSubmit={this.handleSubmit}>
         {searchComp}
-        <button type="button" onClick={this.handlePress}>+</button>
-        <input type="submit" value="Submit" />
+        <div className="row">
+          <div className="col button_div">
+            <button type="button" id="add_button" onClick={this.handlePress}>Add a Filter</button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col button_div">
+            <input type="submit" id="submit_button" value="Submit" />
+          </div>
+        </div>
       </form>
+      <div className="row resultsRow">
       {
         this.state.results.length > 0 && this.state.results.map((obj, index) => {
-          return <Result iframe={obj.Link} key={index} />
+          if (obj.display) {
+            if (index % 6 === 0 && window.innerWidth >= 992) {
+              return (
+                <div key={index} className="col-sm-12 col-md-6 col-lg-3 resultCol firstCol">
+                  <Result obj={obj} key={index} />
+                </div>
+              )
+            } else if (index % 5 === 0 && window.innerWidth >= 992) {
+              return (
+                <div key={index} className="col-sm-12 col-md-6 col-lg-3 resultCol lastCol">
+                  <Result obj={obj} key={index} />
+                </div>
+              )
+            } else {
+              return (
+                <div key={index} className="col-sm-12 col-md-6 col-lg-3 resultCol">
+                  <Result obj={obj} key={index} />
+                </div>
+              )
+            }
+          }
         })
       }
+      </div>
      </div>
    );
  }

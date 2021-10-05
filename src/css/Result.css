@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Cantarell&display=swap');
+
+.result_container {
+  background-color: white;
+  width: 100%;
+  text-align: center;
+  height: 100%;
+  border-radius: 75px;
+  padding: 10px;
+  box-shadow: 5px 5px 50px #888888;
+}
+iframe {
+  margin: 10px;
+}
+
+.ingredient_text {
+  margin-bottom: 1px;
+  font-size: 15px;
+  font-family: 'Cantarell', sans-serif;
+}
+
+.name_text {
+  font-family: 'Cantarell', sans-serif;
+}
+
+@media all and (max-width: 992px) {
+  .result_container {
+    width: 90%;
+    height: auto;
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 75px;
+    padding: 20px;
+  }
+  iframe {
+    margin: 10px;
+  }
+}

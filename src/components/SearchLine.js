@@ -1,4 +1,5 @@
 import React from 'react';
+import "../css/SearchLine.css";
 import Select from 'react-select';
 
 const SIGNS = [
@@ -28,10 +29,16 @@ export default class SearchLine extends React.Component {
 
   render() {
    return (
-     <div>
-      <Select options={this.props.columnNames} id={"ingredient" + this.props.key } onChange={this.handleChangeIngredient}/>
-      <Select options={SIGNS} id={"sign" + this.props.key} onChange={this.handleChangeSign}/>
-      <input type="number" onChange={this.handleChange} />
+     <div className="row searchRow">
+      <div className="col-12">
+        <Select options={this.props.columnNames} placeholder="Ingredient" id={"ingredient" + this.props.key } onChange={this.handleChangeIngredient} className="ingredient_input"/>
+      </div>
+      <div className="col-6">
+        <Select options={SIGNS} placeholder="Sign" id={"sign" + this.props.key} onChange={this.handleChangeSign}/>
+      </div>
+      <div className="col-6">
+        <input type="number" className= "value_input" placeholder="Value (mg)" onChange={this.handleChange} />
+      </div>
      </div>
    );
  }
