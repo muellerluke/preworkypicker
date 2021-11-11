@@ -37,7 +37,7 @@ export default class SearchLine extends React.Component {
         <Select options={SIGNS} placeholder="Sign" id={"sign" + this.props.key} onChange={this.handleChangeSign}/>
       </div>
       <div className="col-6">
-        <input type="number" className= "value_input" placeholder="Value (mg)" onChange={this.handleChange} />
+        <input type="number" step="any" className= "value_input" placeholder="Value (mg)" onChange={this.handleChange} />
       </div>
      </div>
    );

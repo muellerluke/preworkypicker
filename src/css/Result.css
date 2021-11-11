@@ -23,6 +23,10 @@ iframe {
   font-family: 'Cantarell', sans-serif;
 }
 
+.productImage{
+  max-width: 200px;
+}
+
 @media all and (max-width: 992px) {
   .result_container {
     width: 90%;

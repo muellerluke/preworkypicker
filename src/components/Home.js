@@ -31,13 +31,20 @@ export default class Home extends React.Component {
 
   componentDidMount() {
     this.getColumnNames().then((data) => {
+      console.log(data);
+
       data.forEach((obj, index) => {
         obj['label'] = obj['COLUMN_NAME'];
+      });
+      data.unshift({
+        COLUMN_NAME: "PPS",
+        label: "Price Per Serving"
       });
       this.setState({columnNames: data});
     });
 
     this.getResults().then((data) => {
+      console.log(data);
       data.forEach((obj, i) => {
         obj.display = true;
       })
@@ -102,19 +109,25 @@ export default class Home extends React.Component {
         validSearch = false;
       }
     });
+    //if valid search
     if (validSearch) {
       let tempResults = this.state.all;
       tempResults.forEach((resultObj, resultI) => {
         resultObj.display = true;
         this.state.searchArr.forEach((searchObj, searchI) => {
-          if (searchObj.sign === ">=") {
-            if (resultObj[searchObj.ingredient] < searchObj.value) {
-              resultObj.display = false;
+          if (searchObj.ingredient in resultObj) {
+            console.log(resultObj)
+            if (searchObj.sign === ">=") {
+              if (resultObj[searchObj.ingredient] < searchObj.value) {
+                resultObj.display = false;
+              }
+            } else {
+              if (resultObj[searchObj.ingredient] > searchObj.value) {
+                resultObj.display = false;
+              }
             }
           } else {
-            if (resultObj[searchObj.ingredient] > searchObj.value) {
-              resultObj.display = false;
-            }
+            resultObj.display = false;
           }
         })
       })
